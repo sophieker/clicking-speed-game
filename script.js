@@ -8,29 +8,38 @@ const currentlyFaded = new Set();
 
 
 // make each box an object
-// const numBoxes = 28;
+const numBoxes = 28;
 
-// const boxes = new Set();
+const boxes = [];
 
-// for (let i = 1; i <= numBoxes; i++) {
+for (let i = 1; i <= numBoxes; i++) {    
+    // add box objects
+    boxes[i-1] = new Box(i);
+}
 
-//     // convert to string
-//     if (i < 10) {
-//         i = "0" + i;
-//     }
-//     else {
-//         i = i.toString();
-//     }
-    
-//     // add box objects
-//     boxes.set(new Box(i));
-// }
+const createBoxes = () => {
+    boxes.forEach((item) => {
+        const newBox = document.createElement("li");
+        newBox.classList.add("cell");
 
-// for (let i = 0; i < numBoxes; i++) {
-//     const newBox = document.createElement("li");
-//     document.querySelector("ul").append(newBox);
-    
-// }
+        let x;
+
+        // convert to string
+        if (item.id < 10) {
+            x = "0" + item.id;
+        }
+        else {
+            x = item.id.toString();
+        }
+
+        newBox.classList.add("cell" + x);
+        newBox.setAttribute("id", item.id);
+
+        document.querySelector("ul").append(newBox);
+    });
+}
+
+createBoxes();
 
 
 // add event listeners
@@ -60,6 +69,9 @@ document.querySelectorAll("li.cell").forEach((item) => {
 const fadeBox = () => {
     let boxNum = Math.floor(Math.random() * 28) + 1;
 
+    // update date object
+    boxes[boxNum].date = new Date();
+
     while (currentlyFaded.has(boxNum.toString())) {
         boxNum = Math.floor(Math.random() * 28) + 1;
         console.log(boxNum);
@@ -74,11 +86,27 @@ const fadeBox = () => {
     }
 
     document.querySelector(".cell" + boxNum).classList.add("fade");
+
     currentlyFaded.add(boxNum);
+}
+
+const gameOver = () => {
+    document.body.innerHTML = `<p>GAME OVER</p>`;
+}
+
+const checkGameStatus = () => {
+    let now = new Date();
+    boxes.forEach((item) => {
+        if ((now - item.date) > 5) {
+            gameOver();
+            return;
+        }
+    });
 }
 
 
 
 const interval = setInterval(() => {
     fadeBox();
+    checkGameStatus();
 }, 500);

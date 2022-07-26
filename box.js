@@ -3,7 +3,7 @@ class Box {
         id
     )
     {
-        this.timeCreated = new Date();
+        this.date = new Date();
         this.id = id;
     }
 }
