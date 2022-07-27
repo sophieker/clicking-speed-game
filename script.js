@@ -1,7 +1,6 @@
 import Box from "./box.js";
 
 var colorCounter = 0;
-var gameStatus = true; // false = game over
 var score = 0;
 
 const currentlyFaded = new Set();
@@ -69,19 +68,20 @@ document.querySelectorAll("li.cell").forEach((item) => {
 
 });
 
-
+// randomly select a box to fade to red
 const fadeBox = () => {
+    // randomly select a box. if it is already fading, select again
     let boxNum = Math.floor(Math.random() * 28) + 1;
-
-    // update date object
-    boxes[boxNum].date = new Date();
-    boxes[boxNum].isFading = true;
-
-    while (currentlyFaded.has(boxNum.toString())) {
+    while (boxes[boxNum].isFading == true) {
         boxNum = Math.floor(Math.random() * 28) + 1;
     }
 
-    // add 0 in front of single digits
+    // update date and isFading property 
+    boxes[boxNum].date = new Date();
+    boxes[boxNum].isFading = true;
+
+
+    // add 0 in front of single digits 
     if (boxNum < 10) {
         boxNum = "0" + boxNum;
     }

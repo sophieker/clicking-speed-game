@@ -3,7 +3,7 @@ class Box {
         id
     )
     {
-        this.date = new Date() + 9999999999;
+        this.date = new Date();
         this.id = id;
         this.isFading = false;
     }
