@@ -54,6 +54,10 @@ document.querySelectorAll("li.cell").forEach((item) => {
 
     item.addEventListener("click", () => {
         if (item.classList.contains("fade")) {
+
+            boxes[item.id].date = new Date();
+            boxes[item.id].isFading = false;
+
             item.classList.remove("fade");
             currentlyFaded.delete(item.classList.item(1).substring(4, 6));
 
@@ -71,10 +75,10 @@ const fadeBox = () => {
 
     // update date object
     boxes[boxNum].date = new Date();
+    boxes[boxNum].isFading = true;
 
     while (currentlyFaded.has(boxNum.toString())) {
         boxNum = Math.floor(Math.random() * 28) + 1;
-        console.log(boxNum);
     }
 
     // add 0 in front of single digits
@@ -97,7 +101,9 @@ const gameOver = () => {
 const checkGameStatus = () => {
     let now = new Date();
     boxes.forEach((item) => {
-        if ((now - item.date) > 5) {
+        if (item.isFading && (now - item.date) > 5000) {
+            console.log(item.id);
+            console.log(now - item.date);
             gameOver();
             return;
         }
