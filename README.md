@@ -1,3 +1,3 @@
-# click the boxes before they turn red
+## javascript game
 
-# testing
+### click the boxes before they turn red
