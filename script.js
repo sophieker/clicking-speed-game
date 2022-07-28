@@ -3,12 +3,8 @@ import Box from "./box.js";
 var colorCounter = 0;
 var score = 0;
 
-const currentlyFaded = new Set();
-
-
-// make each box an object
+// store boxes in an array (not the actual html elements - just box objects)
 const numBoxes = 28;
-
 const boxes = [];
 
 for (let i = 1; i <= numBoxes; i++) {    
@@ -16,51 +12,37 @@ for (let i = 1; i <= numBoxes; i++) {
     boxes[i-1] = new Box(i);
 }
 
-const createBoxes = () => {
-    boxes.forEach((item) => {
-        const newBox = document.createElement("li");
-        newBox.classList.add("cell");
+// map the array of box objects to html elements
+boxes.forEach((item) => {
+    const newBox = document.createElement("li");
+    newBox.classList.add("cell");
 
-        let x;
-
-        // convert to string
-        if (item.id < 10) {
-            x = "0" + item.id;
-        }
-        else {
-            x = item.id.toString();
-        }
-
-        newBox.classList.add("cell" + x);
-        newBox.setAttribute("id", item.id);
-
-        document.querySelector("ul").append(newBox);
-    });
-}
-
-createBoxes();
+    newBox.setAttribute("num", item.id);
+    document.querySelector("ul").append(newBox);
+});
 
 
 // add event listeners
-document.querySelectorAll("li.cell").forEach((item) => {
+document.querySelectorAll(".cell").forEach((item) => {
+
+    // add the hover class when a mouse enters a box
     item.addEventListener("mouseenter", () => {
         item.classList.add("hover");
     }, false);
 
+    // remove the hover class when a mouse leaves the box
     item.addEventListener("mouseleave", () => {
         item.classList.remove("hover");
     }, false);
 
+    // when the box is clicked, remove the fade class if it is added (resets the color)
     item.addEventListener("click", () => {
         if (item.classList.contains("fade")) {
 
-            boxes[item.id].date = new Date();
-            boxes[item.id].isFading = false;
+            boxes[item.getAttribute("num")].isFading = false;
 
             item.classList.remove("fade");
-            currentlyFaded.delete(item.classList.item(1).substring(4, 6));
 
-            
             score++;
             document.querySelector("p.score").innerHTML = `score = ${score}`;
         }
@@ -72,44 +54,31 @@ document.querySelectorAll("li.cell").forEach((item) => {
 const fadeBox = () => {
     // randomly select a box. if it is already fading, select again
     let boxNum = Math.floor(Math.random() * 28) + 1;
+
     while (boxes[boxNum].isFading == true) {
         boxNum = Math.floor(Math.random() * 28) + 1;
     }
 
     // update date and isFading property 
-    boxes[boxNum].date = new Date();
+    boxes[boxNum].startedFading = new Date();
     boxes[boxNum].isFading = true;
 
-
-    // add 0 in front of single digits 
-    if (boxNum < 10) {
-        boxNum = "0" + boxNum;
-    }
-    else {
-        boxNum = boxNum.toString();
-    }
-
-    document.querySelector(".cell" + boxNum).classList.add("fade");
-
-    currentlyFaded.add(boxNum);
+    document.querySelector("li:nth-child(" + boxNum + ")").classList.add("fade");    
 }
 
 const gameOver = () => {
-    document.body.innerHTML = `<p>GAME OVER</p>`;
+    document.body.innerHTML = `<p>GAME OVER, score: ${score}</p>`;
+    clearInterval(interval);
 }
 
 const checkGameStatus = () => {
     let now = new Date();
     boxes.forEach((item) => {
-        if (item.isFading && (now - item.date) > 5000) {
-            console.log(item.id);
-            console.log(now - item.date);
+        if (item.isFading && (now - item.startedFading) > 5000) {
             gameOver();
-            return;
         }
     });
 }
-
 
 
 const interval = setInterval(() => {
