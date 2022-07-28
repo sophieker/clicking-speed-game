@@ -7,6 +7,8 @@ var score = 0;
 const numBoxes = 28;
 const boxes = [];
 
+var level = 1;
+
 for (let i = 1; i <= numBoxes; i++) {    
     // add box objects
     boxes[i-1] = new Box(i);
@@ -44,7 +46,7 @@ document.querySelectorAll(".cell").forEach((item) => {
             item.classList.remove("fade");
 
             score++;
-            document.querySelector("p.score").innerHTML = `score = ${score}`;
+            document.querySelector("p.score").innerHTML = `score: ${score}`;
         }
     }, false);
 

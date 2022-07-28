@@ -46,9 +46,17 @@ body {
   transition: background-color 5s;
 }
 
+.heading {
+  text-align: center;
+  color:rgb(138, 67, 67);
+  font-family: 'Press Start 2P', cursive;
+}
+
 p.score {
   margin: auto;
   color: rgb(187, 187, 187);
+  text-align: right;
+  font-size: 20px;
 }
 
 .gameovertext {
@@ -59,7 +67,7 @@ p.score {
   border: rgb(126, 47, 47) 10px solid;
   background-color: rgba(165, 123, 117, 0.4); 
   color: rgba(138,53,40,1);
-  line-height: 1.5;
+  line-height: 1.3;
 }
 
 .end-score {
