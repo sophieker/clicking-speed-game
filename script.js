@@ -67,22 +67,29 @@ const fadeBox = () => {
 }
 
 const gameOver = () => {
-    // document.querySelector("")
 
-    // over = document.createElement("div");
-    // gameOverText = document.createElement("p");
-    // gameOverText.innerHTML = `GAME OVER`;
-    // gameOverText.classList.add("gameover");
-    // over.append(gameOverText);
-
-    // maincontent = document.querySelector("main");
-    // maincontent.replaceWith(over);
-    // clearInterval(interval);
-
-    document.body.innerHTML = `<p class = "gameovertext">GAME OVER <br><span class = "end-score">score: ${score}</span></p>`;
+    document.body.innerHTML = `
+    <p class = "gameovertext">GAME OVER 
+    <br>
+    <span class = "end-score">SCORE: ${score}</span>
+    <br>
+    <span class = "retry">retry ↻</span>
+    </p>`;
     clearInterval(interval);
 
-    // document.createElement("")
+    const retry = document.querySelector(".retry");
+
+    retry.addEventListener("mouseover", () => {
+        retry.classList.add("retry-hover");
+    });
+
+    retry.addEventListener("mouseout", () => {
+        retry.classList.remove("retry-hover");
+    });
+
+    retry.addEventListener("click", () => {
+        document.location.reload();
+    });
 }
 
 const checkGameStatus = () => {
