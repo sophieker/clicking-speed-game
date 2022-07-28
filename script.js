@@ -67,8 +67,22 @@ const fadeBox = () => {
 }
 
 const gameOver = () => {
-    document.body.innerHTML = `<p>GAME OVER, score: ${score}</p>`;
+    // document.querySelector("")
+
+    // over = document.createElement("div");
+    // gameOverText = document.createElement("p");
+    // gameOverText.innerHTML = `GAME OVER`;
+    // gameOverText.classList.add("gameover");
+    // over.append(gameOverText);
+
+    // maincontent = document.querySelector("main");
+    // maincontent.replaceWith(over);
+    // clearInterval(interval);
+
+    document.body.innerHTML = `<p class = "gameovertext">GAME OVER <br><span class = "end-score">score: ${score}</span></p>`;
     clearInterval(interval);
+
+    // document.createElement("")
 }
 
 const checkGameStatus = () => {

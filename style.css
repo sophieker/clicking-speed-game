@@ -44,3 +44,16 @@ body {
 p.score {
   margin: auto;
 }
+
+.gameovertext {
+  font-size: 30px;
+  text-align: center;
+  padding: 100px;
+  border: black 2px solid;
+  background-color: rgba(170,162,161,1);
+  color: rgba(138,53,40,1);
+}
+
+.end-score {
+  color: black;
+}
